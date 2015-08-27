@@ -1,0 +1,32 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<script src="Api.js"></script>
+<script src="Item.js"></script>
+<script src="Table.js"></script>
+<script src="App.js"></script>
+<script src="ItemDetail.js"></script>
+
+<div id="app">
+	<div id="table">Please wait..</div>
+	<div id="detail"></div>
+</div>
+<!--div id="output"></div-->
+
+
+<script>
+
+var tableView = new Table($('#table'));
+var itemView = new ItemDetail($('#detail'));
+var App = new App(itemView, tableView);
+
+$(function(){
+	api.apply(tableView, ['flickr.photos.getRecent', 'loaded']);
+});
+
+</script>
+
+</body>
+</html>
