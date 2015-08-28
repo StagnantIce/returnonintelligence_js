@@ -3,12 +3,13 @@ var Item = function(id) {
 	this.thumb = null;
 	this.is_loaded = false;
 	this.$el = null;
+	this.url = '';
 }
 
 Item.prototype.render = function($obj) {
 	this.$el = $('<div></div>');
-	this.$el.append('<img style="cursor:pointer" big="'+this.image+'" src="'+this.thumb+'"/>');
-	this.$el.append('<a href="javascript:void(0)">&gt;&gt;</a>');
+	this.$el.append('<a class="aimage" href="#'+this.id+'"><img style="cursor:pointer;border:0px;" big="'+this.image+'" src="'+this.thumb+'"/></a>');
+	this.$el.append('<a target="__blank" href="'+this.url+'">&gt;&gt;</a>');
 	$obj.append(this.$el);
 }
 
@@ -17,7 +18,12 @@ Item.prototype.load = function() {
 }
 
 Item.prototype.loaded = function(obj) {
-	this.thumb = obj.sizes.size[0].source;
-	this.is_loaded = true;
-	this.image = obj.sizes.size[6].source;
+	if (obj.sizes) {
+		this.thumb = obj.sizes.size[0].source;
+		this.is_loaded = true;
+		this.url = obj.sizes.size[0].url.replace('sizes/sq/','')
+		this.image = obj.sizes.size[obj.sizes.size.length-2].source;
+	} else {
+		alert('Image error loading. Please retry.')
+	}
 }
