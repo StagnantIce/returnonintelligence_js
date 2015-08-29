@@ -2,6 +2,9 @@ var Table = function($el) {
 	this.items = [];
 	this.$el = $el;
 	this.columns = 10;
+	this.max = 20;
+	this.selected = '';
+	this.$el.delegate('img', 'click', this.click.bind(this));
 }
 
 Table.prototype.render = function() {
@@ -31,6 +34,9 @@ Table.prototype.loaded = function(obj) {
 	this.$el.html('Please wait...');
 	var photos = obj.photos.photo;
 	for(var i = 0;i < photos.length; i++) {
+		if (i >= this.max) {
+			break;
+		}
 		var item = new Item(photos[i].id);
 		this.items.push(item);
 		item.load();
@@ -44,4 +50,8 @@ Table.prototype.hide = function() {
 
 Table.prototype.show = function() {
 	$('table', this.$el).slideDown();
+}
+
+Table.prototype.click = function(e) {
+	this.selected = $(e.currentTarget).attr('big');
 }

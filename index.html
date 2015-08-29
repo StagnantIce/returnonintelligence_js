@@ -21,6 +21,7 @@
 var tableView = new Table($('#table'));
 var itemView = new ItemDetail($('#detail'));
 var App = new App(itemView, tableView);
+window.onhashchange = App.click.bind(App);
 
 $(function(){
 	api.apply(tableView, ['flickr.photos.getRecent', 'loaded']);
